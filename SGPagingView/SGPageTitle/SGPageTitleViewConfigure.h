@@ -64,6 +64,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) CGFloat titleTextZoomRatio;
 /** 标题额外增加的宽度，默认为 20.0f */
 @property (nonatomic, assign) CGFloat titleAdditionalWidth;
+/** 标题背景颜色，默认为 clear */
+@property (nonatomic, strong) UIColor *titleBackGroundColor;
 
 #pragma mark - - 指示器属性
 /** 是否显示指示器，默认为 YES */

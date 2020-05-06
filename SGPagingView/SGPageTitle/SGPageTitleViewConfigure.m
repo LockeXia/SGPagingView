@@ -81,6 +81,14 @@
     return _titleAdditionalWidth;
 }
 
+- (UIColor *)titleBackGroundColor {
+    if (!_titleBackGroundColor) {
+        _titleBackGroundColor = [UIColor clearColor];
+    }
+    return _titleBackGroundColor;
+}
+
+
 #pragma mark - - 指示器属性
 - (UIColor *)indicatorColor {
     if (!_indicatorColor) {

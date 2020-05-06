@@ -105,6 +105,35 @@
     }
 }
 
+- (void)setupBackgroudLayerWithIndex:(NSInteger)index btn:(UIButton *)btn {
+    UIView *backgroudLayer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.configure.indicatorFixedWidth, self.configure.indicatorHeight)];
+    backgroudLayer.center = btn.center;
+    backgroudLayer.backgroundColor = self.configure.titleBackGroundColor;
+    backgroudLayer.layer.borderWidth = self.configure.indicatorBorderWidth;
+    backgroudLayer.layer.borderColor = self.configure.indicatorBorderColor.CGColor;
+    [self.scrollView insertSubview:backgroudLayer atIndex:0];
+    
+    CGSize tempSize = [self P_sizeWithString:[self.btnMArr[index] currentTitle] font:self.configure.titleFont];
+    CGFloat tempIndicatorViewH = tempSize.height;
+    if (self.configure.indicatorHeight > self.SG_height) {
+        backgroudLayer.SG_y = 0;
+        backgroudLayer.SG_height = self.SG_height;
+    } else if (self.configure.indicatorHeight < tempIndicatorViewH) {
+        backgroudLayer.SG_y = 0.5 * (self.SG_height - tempIndicatorViewH);
+        backgroudLayer.SG_height = tempIndicatorViewH;
+    } else {
+        backgroudLayer.SG_y = 0.5 * (self.SG_height - self.configure.indicatorHeight);
+        backgroudLayer.SG_height = self.configure.indicatorHeight;
+    }
+    // 4.1、指示器圆角处理
+    if (self.configure.indicatorCornerRadius > 0.5 * _indicatorView.SG_height) {
+        backgroudLayer.layer.cornerRadius = 0.5 * backgroudLayer.SG_height;
+    } else {
+        backgroudLayer.layer.cornerRadius = self.configure.indicatorCornerRadius;
+    }
+}
+
+
 #pragma mark - - - layoutSubviews
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -166,6 +195,9 @@
             _scrollView.bounces = NO;
         }
     }
+    [self.btnMArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self setupBackgroudLayerWithIndex:idx btn:(UIButton *)obj];
+    }];
     // 3、布局底部分割线的 frame
     if (self.configure.showBottomSeparator) {
         CGFloat bottomSeparatorW = self.SG_width;
